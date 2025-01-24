@@ -5,7 +5,7 @@ metadata:
 spec:
   host: mediawiki-gp-3.apps.openshift.kakor.ovh
   port:
-    targetPort: https
+    targetPort: 80
   tls:
     insecureEdgeTerminationPolicy: Redirect
     termination: reencrypt
