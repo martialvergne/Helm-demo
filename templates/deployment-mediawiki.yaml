@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mediawiki
+  name: mediawiki-deployment
   labels:
     app: mediawiki
 spec:
@@ -16,26 +16,28 @@ spec:
     spec:
       containers:
       - name: mediawiki
-        image: mediawiki:latest
+        image: harbor.kakor.ovh/public/mediawiki:latest #mediawiki:latest
         ports:
         - containerPort: 80
+        securityContext:
+          allowPrivilegeEscalation: true
         env:
-        - name: MW_DB_HOST
-          value: "mysql-service"
-        - name: MW_DB_NAME
-          value: "mediawiki"
-        - name: MW_DB_USER
-          value: "mediawiki_user"
-        - name: MW_DB_PASSWORD
+        - name: MEDIAWIKI_DB_HOST
+          value: mysql
+        - name: MEDIAWIKI_DB_NAME
+          value: mediawiki
+        - name: MEDIAWIKI_DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: database
+              key: user
+        - name: MEDIAWIKI_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
-              key: mysql-password
-        volumeMounts:
-        - name: apache-config-volume
-          mountPath: /etc/apache2/sites-available/000-default.conf
-          subPath: apache2.conf
-      volumes:
-      - name: apache-config-volume
+              name: mysql-password
+              key: password
+    volumes:
+      - name: mediawiki-config
         configMap:
-          name: apache-config
+          name: mediawiki-config
+

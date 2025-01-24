@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mediawiki-gp-3
+spec:
+  host: mediawiki-gp-3.apps.openshift.kakor.ovh
+  port:
+    targetPort: https
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: reencrypt
+  to:
+    kind: Service
+    name: mediawiki
+    weight: 100
+  wildcardPolicy: None
