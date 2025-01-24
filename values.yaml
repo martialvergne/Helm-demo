@@ -1,3 +1,5 @@
+mediawiki:
+  image: harbor.kakor.ovh/public/mediawiki:latest #mediawiki:latest
 
-mysqlRootPassword: "rootpassword"
-mysqlPassword: "userpassword"
+mysql:
+  image: harbor.kakor.ovh/public/mysql:latest #mysql:latest
