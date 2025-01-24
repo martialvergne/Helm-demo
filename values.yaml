@@ -3,3 +3,4 @@ mediawiki:
 
 mysql:
   image: harbor.kakor.ovh/public/mysql:latest #mysql:latest
+  port: "3306"
