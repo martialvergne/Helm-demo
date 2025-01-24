@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki
+  labels:
+    app: mediawiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mediawiki
+  template:
+    metadata:
+      labels:
+        app: mediawiki
+    spec:
+      containers:
+      - name: mediawiki
+        image: mediawiki:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: MW_DB_HOST
+          value: "mysql-service"
+        - name: MW_DB_NAME
+          value: "mediawiki"
+        - name: MW_DB_USER
+          value: "mediawiki_user"
+        - name: MW_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-password
+        volumeMounts:
+        - name: apache-config-volume
+          mountPath: /etc/apache2/sites-available/000-default.conf
+          subPath: apache2.conf
+      volumes:
+      - name: apache-config-volume
+        configMap:
+          name: apache-config

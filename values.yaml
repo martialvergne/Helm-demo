@@ -1,0 +1,3 @@
+
+mysqlRootPassword: "rootpassword"
+mysqlPassword: "userpassword"
