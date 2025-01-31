@@ -1,5 +1,6 @@
 mediawiki:
   image: harbor.kakor.ovh/public/mediawiki:latest #mediawiki:latest
+  port: "80"
 
 mysql:
   image: harbor.kakor.ovh/public/mysql:latest #mysql:latest
